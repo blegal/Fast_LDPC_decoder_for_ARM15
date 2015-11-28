@@ -1,10 +1,11 @@
-# Fast_LDPC_decoder_for_ARM15
-LDPC decoders for ARM processor
 
 As promised in our article (High-Throughput LDPC Decoder on Low-Power Embedded Processors, DOI:
-10.1109/LCOMM.2015.2477081) we published the LDPC decoder source codes.
+10.1109/LCOMM.2015.2477081) we published the LDPC decoder source codes. Thus, performances can
+be replayed and work better understood. 
 
-Just move to bin folder and type:
+> Please make the same !
+
+In order to compile one LDPC decoder, just move to bin folder and type:
 
 > make
 
