@@ -1,25 +1,25 @@
-/*
- *  ldcp_decoder.h
- *  ldpc3
- *
- *  Created by legal on 02/04/11.
- *  Copyright 2011 ENSEIRB. All rights reserved.
- *
- */
-
-/*----------------------------------------------------------------------------*/
-/*
-    - 10 mars 2014 : bugfix de la saturation dans le message entrant (VN => CN)
- */
-
+/**
+  Copyright (c) 2012-2015 "Bordeaux INP, Bertrand LE GAL"
+  [http://legal.vvv.enseirb-matmeca.fr]
+  This file is part of LDPC_C_Simulator.
+  LDPC_C_Simulator is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 #include "CDecoder_OMS_fixed_NEON8.h"
-//#include "../../CTools/CTools.h"
 
 #define TYPE int8x8_t
 
 #define VECTOR_LOAD(ptr)            ((ptr)[0])
 #define VECTOR_UNCACHED_LOAD(ptr)   ((ptr)[0])
-#define VECTOR_STORE(ptr,v)         ((ptr)[0])=v 
+#define VECTOR_STORE(ptr,v)         ((ptr)[0])=v
 
 #define VECTOR_ADD(a,b)             (vqaddq_s8(a,b)) //
 #define VECTOR_SUB(a,b)             (vqsubq_s8(a,b)) //
@@ -129,7 +129,7 @@ bool CDecoder_OMS_fixed_SSE::decode_8bits(signed char Intrinsic_fix[], signed ch
     ////////////////////////////////////////////////////////////////////////////
 
 
-    ////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////
     //
     // ENTRELACEMENT DES DONNEES D'ENTREE POUR POUVOIR EXPLOITER LE MODE SIMD
     //
@@ -147,9 +147,9 @@ bool CDecoder_OMS_fixed_SSE::decode_8bits(signed char Intrinsic_fix[], signed ch
     //
     ////////////////////////////////////////////////////////////////////////////
 
-    
+
 //    unsigned int arret = 0;
-    
+
     while (nombre_iterations--) {
         TYPE *p_msg1r                      = var_mesgs;
         TYPE *p_msg1w                      = var_mesgs;
@@ -163,7 +163,7 @@ bool CDecoder_OMS_fixed_SSE::decode_8bits(signed char Intrinsic_fix[], signed ch
 
 #if NB_DEGRES >= 1
         for (int i=0; i<DEG_1_COMPUTATIONS; i++){
-            
+
             TYPE tab_vContr[DEG_1];
             TYPE sign = VECTOR_ZERO;
             TYPE min1 = VECTOR_SET1(vSAT_POS_VAR);
@@ -234,7 +234,7 @@ bool CDecoder_OMS_fixed_SSE::decode_8bits(signed char Intrinsic_fix[], signed ch
         const TYPE msign8        = VECTOR_SET1( sign8   );
         const TYPE misign8b      = VECTOR_SET1( isign8b );
 #endif
-            
+
             TYPE tab_vContr[DEG_2];
             TYPE sign = zero;
             TYPE min1 = VECTOR_SET1(vSAT_POS_VAR);
@@ -294,7 +294,7 @@ bool CDecoder_OMS_fixed_SSE::decode_8bits(signed char Intrinsic_fix[], signed ch
         const TYPE msign8        = VECTOR_SET1( sign8   );
         const TYPE misign8b      = VECTOR_SET1( isign8b );
 #endif
-            
+
             TYPE tab_vContr[DEG_3];
             TYPE sign = zero;
             TYPE min1 = VECTOR_SET1(vSAT_POS_VAR);
@@ -354,7 +354,7 @@ bool CDecoder_OMS_fixed_SSE::decode_8bits(signed char Intrinsic_fix[], signed ch
         const TYPE msign8        = VECTOR_SET1( sign8   );
         const TYPE misign8b      = VECTOR_SET1( isign8b );
 #endif
-            
+
             TYPE tab_vContr[DEG_4];
             TYPE sign = zero;
             TYPE min1 = VECTOR_SET1(vSAT_POS_VAR);
@@ -414,7 +414,7 @@ bool CDecoder_OMS_fixed_SSE::decode_8bits(signed char Intrinsic_fix[], signed ch
         const TYPE msign8        = VECTOR_SET1( sign8   );
         const TYPE misign8b      = VECTOR_SET1( isign8b );
 #endif
-            
+
             TYPE tab_vContr[DEG_5];
             TYPE sign = zero;
             TYPE min1 = VECTOR_SET1(vSAT_POS_VAR);
@@ -492,5 +492,3 @@ bool CDecoder_OMS_fixed_SSE::decode_8bits(signed char Intrinsic_fix[], signed ch
 
     return 0;
 }
-
-

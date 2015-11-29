@@ -14,25 +14,25 @@ EXEC=main.icc
 
 SRC= \
  ../src/CBitGenerator/CBitGenerator.cpp \
- ../src/CChanel/CChanel.cpp \
- ../src/CChanel/CChanelAWGN_x86.cpp \
- ../src/CChanel/CChanelForFixed.cpp \
- ../src/CDecoder/template/CDecoder.cpp \
- ../src/CDecoder/template/CDecoder_fixed.cpp \
+ ../src/CChanel/CChanel.cpp             \
+ ../src/CChanel/CChanelAWGN_x86.cpp     \
+ ../src/CChanel/CChanelForFixed.cpp     \
+ ../src/CDecoder/template/CDecoder.cpp  \
+ ../src/CDecoder/template/CDecoder_fixed.cpp     \
  ../src/CDecoder/template/CDecoder_fixed_x86.cpp \
  ../src/CDecoder/template/CDecoder_fixed_SSE.cpp \
- ../src/CDecoder/OMS/CDecoder_OMS_fixed_x86.cpp \
- ../src/CDecoder/OMS/CDecoder_OMS_fixed_SSE.cpp \
+ ../src/CDecoder/OMS/CDecoder_OMS_fixed_x86.cpp  \
+ ../src/CDecoder/OMS/CDecoder_OMS_fixed_SSE.cpp  \
  ../src/CDecoder/OMS/CDecoder_OMS_fixed_NEON16_v2.cpp \
- ../src/CEncoder/CFakeEncoder.cpp \
- ../src/CEncoder/Encoder.cpp \
+ ../src/CEncoder/CFakeEncoder.cpp   \
+ ../src/CEncoder/Encoder.cpp        \
  ../src/CEncoder/GenericEncoder.cpp \
- ../src/CErrorAnalyzer/CErrorAnalyzer.cpp \
+ ../src/CErrorAnalyzer/CErrorAnalyzer.cpp          \
  ../src/CFixPointConversion/CFastFixConversion.cpp \
- ../src/CFixPointConversion/CFixConversion.cpp \
- ../src/CTerminal/CTerminal.cpp \
- ../src/CTimer/CTimer.cpp \
- ../src/CTrame/CTrame.cpp \
+ ../src/CFixPointConversion/CFixConversion.cpp     \
+ ../src/CTerminal/CTerminal.cpp   \
+ ../src/CTimer/CTimer.cpp         \
+ ../src/CTrame/CTrame.cpp         \
  ../src/CTools/transpose_neon.cpp \
  ../src/main_p.cpp
 

@@ -1,5 +1,20 @@
-#include "CChanelAWGN_x86.h"
+/**
+  Copyright (c) 2012-2015 "Bordeaux INP, Bertrand LE GAL"
+  [http://legal.vvv.enseirb-matmeca.fr]
+  This file is part of LDPC_C_Simulator.
+  LDPC_C_Simulator is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
+#include "CChanelAWGN_x86.h"
 
 #define MODE_SSE_AVX 0
 
@@ -38,7 +53,7 @@ void CChanelAWGN_x86::BruitGaussien()
 
 CChanelAWGN_x86::CChanelAWGN_x86(CTrame *t, int _BITS_LLR, bool QPSK, bool Es_N0)
     : CChanel(t, _BITS_LLR, QPSK, Es_N0){
-    
+
 }
 
 CChanelAWGN_x86::~CChanelAWGN_x86(){
@@ -46,7 +61,7 @@ CChanelAWGN_x86::~CChanelAWGN_x86(){
 }
 
 void CChanelAWGN_x86::configure(double _Eb_N0){
-    
+
     rendement = (float) (_vars) / (float) (_data);
     if (es_n0) {
         // ES/N0 = Eb/N0 + 10*log10(R*m)
@@ -56,14 +71,14 @@ void CChanelAWGN_x86::configure(double _Eb_N0){
         Eb_N0 = _Eb_N0 - 10.0 * log10(2 * rendement);
     } else {
         Eb_N0 = _Eb_N0;
-    }    
-    
+    }
+
     double interm = 10.0 * log10(rendement);
     interm        = -0.1*((double)Eb_N0+interm);
     SigB          = sqrt(pow(10.0,interm)/2);
     qbeta         = SigB * sqrt(2.0) * inv_erf( BITS_LLR - 1 ); // PATCH CEDRIC MARCHAND
     R             = (1.0 + qbeta);
-    
+
     //
     // FACTEUR DE NORMALISATION DU CANAL PROVENENT DU DECODEUR DE CODE POLAIRE
     // A CAMILLE.

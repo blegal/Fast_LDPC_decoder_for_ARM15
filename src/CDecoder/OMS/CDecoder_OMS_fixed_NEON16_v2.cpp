@@ -1,17 +1,18 @@
-/*
- *  ldcp_decoder.h
- *  ldpc3
- *
- *  Created by legal on 02/04/11.
- *  Copyright 2011 ENSEIRB. All rights reserved.
- *
- */
-
-/*----------------------------------------------------------------------------*/
-/*
-    - 10 mars 2014 : bugfix de la saturation dans le message entrant (VN => CN)
- */
-
+/**
+  Copyright (c) 2012-2015 "Bordeaux INP, Bertrand LE GAL"
+  [http://legal.vvv.enseirb-matmeca.fr]
+  This file is part of LDPC_C_Simulator.
+  LDPC_C_Simulator is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 #include "CDecoder_OMS_fixed_NEON16_v2.h"
 #include "../../CTools/transpose_neon.hpp"
 
@@ -21,7 +22,7 @@
 #define  _PREFETCH_
 
 #define VECTOR_LOAD(ptr)            vld1q_s8((int8_t*)ptr) //((ptr)[0])
-#define VECTOR_STORE(ptr,v)         vst1q_s8((int8_t*)ptr,v)//((ptr)[0])=v 
+#define VECTOR_STORE(ptr,v)         vst1q_s8((int8_t*)ptr,v)//((ptr)[0])=v
 
 #define VECTOR_ADD(a,b)             (vqaddq_s8(a,b)) //
 #define VECTOR_SUB(a,b)             (vqsubq_s8(a,b)) //
@@ -141,7 +142,7 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
     ////////////////////////////////////////////////////////////////////////////
 
 
-    ////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////
     //
     // ENTRELACEMENT DES DONNEES D'ENTREE POUR POUVOIR EXPLOITER LE MODE SIMD
     //
@@ -158,7 +159,7 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
     //
     ////////////////////////////////////////////////////////////////////////////
 
-    if( 1 )    
+    if( 1 )
     {
 	nombre_iterations--;
         TYPE *p_msg1w               = var_mesgs;
@@ -169,7 +170,7 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
 
 #ifdef DEG_1
         for (int i=0; i<DEG_1_COMPUTATIONS; i++){
-            
+
             TYPE tab_vContr[DEG_1];
             TYPE sign = VECTOR_ZERO;
             TYPE min1 = VECTOR_SET1(127);
@@ -623,7 +624,7 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
 
 #ifdef DEG_1
         for (int i=0; i<DEG_1_COMPUTATIONS; i++){
-            
+
             TYPE tab_vContr[DEG_1];
             TYPE sign = VECTOR_ZERO;
             TYPE min1 = VECTOR_SET1(vSAT_POS_VAR);
@@ -680,7 +681,7 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
             __builtin_prefetch (p_indice_nod1 + DEG_2,   0, 3);
             __builtin_prefetch (p_indice_nod1 + DEG_2+4, 0, 3);
             for(int j=0 ; j<DEG_2 ; j++)
-            {            
+            {
                 TYPE vNoeud = VECTOR_LOAD( *p_indice_nod1 );
                 TYPE vMessg = VECTOR_LOAD(p_msg1r);
                 if( (j & 0x01) == 0 ) __builtin_prefetch (p_msg1r+DEG_2, 0, 0);
@@ -732,7 +733,7 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
             __builtin_prefetch (p_indice_nod1 + DEG_3,   0, 3);
             __builtin_prefetch (p_indice_nod1 + DEG_3+4, 0, 3);
             for(int j=0 ; j<DEG_3 ; j++)
-            {            
+            {
                 TYPE vNoeud = VECTOR_LOAD( *p_indice_nod1 );
                 TYPE vMessg = VECTOR_LOAD(p_msg1r);
                 if( (j & 0x01) == 0 ) __builtin_prefetch (p_msg1r+DEG_3, 0, 0);
@@ -784,7 +785,7 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
             __builtin_prefetch (p_indice_nod1 + DEG_4,   0, 3);
             __builtin_prefetch (p_indice_nod1 + DEG_4+4, 0, 3);
             for(int j=0 ; j<DEG_4 ; j++)
-            {            
+            {
                 TYPE vNoeud = VECTOR_LOAD( *p_indice_nod1 );
                 TYPE vMessg = VECTOR_LOAD(p_msg1r);
                 if( (j & 0x01) == 0 ) __builtin_prefetch (p_msg1r+DEG_4, 0, 0);
@@ -836,7 +837,7 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
             __builtin_prefetch (p_indice_nod1 + DEG_5,   0, 3);
             __builtin_prefetch (p_indice_nod1 + DEG_5+4, 0, 3);
             for(int j=0 ; j<DEG_5 ; j++)
-            {            
+            {
                 TYPE vNoeud = VECTOR_LOAD( *p_indice_nod1 );
                 TYPE vMessg = VECTOR_LOAD(p_msg1r);
                 if( (j & 0x01) == 0 ) __builtin_prefetch (p_msg1r+DEG_5, 0, 0);
@@ -888,7 +889,7 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
             __builtin_prefetch (p_indice_nod1 + DEG_6,   0, 3);
             __builtin_prefetch (p_indice_nod1 + DEG_6+4, 0, 3);
             for(int j=0 ; j<DEG_6 ; j++)
-            {            
+            {
                 TYPE vNoeud = VECTOR_LOAD( *p_indice_nod1 );
                 TYPE vMessg = VECTOR_LOAD(p_msg1r);
                 if( (j & 0x01) == 0 ) __builtin_prefetch (p_msg1r+DEG_6, 0, 0);
@@ -940,7 +941,7 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
             __builtin_prefetch (p_indice_nod1 + DEG_7,   0, 3);
             __builtin_prefetch (p_indice_nod1 + DEG_7+4, 0, 3);
             for(int j=0 ; j<DEG_7 ; j++)
-            {            
+            {
                 TYPE vNoeud = VECTOR_LOAD( *p_indice_nod1 );
                 TYPE vMessg = VECTOR_LOAD(p_msg1r);
                 if( (j & 0x01) == 0 ) __builtin_prefetch (p_msg1r+DEG_7, 0, 0);
@@ -992,7 +993,7 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
             __builtin_prefetch (p_indice_nod1 + DEG_8,   0, 3);
             __builtin_prefetch (p_indice_nod1 + DEG_8+4, 0, 3);
             for(int j=0 ; j<DEG_8 ; j++)
-            {            
+            {
                 TYPE vNoeud = VECTOR_LOAD( *p_indice_nod1 );
                 TYPE vMessg = VECTOR_LOAD(p_msg1r);
                 if( (j & 0x01) == 0 ) __builtin_prefetch (p_msg1r+DEG_8, 0, 0);
@@ -1044,7 +1045,7 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
             __builtin_prefetch (p_indice_nod1 + DEG_9,   0, 3);
             __builtin_prefetch (p_indice_nod1 + DEG_9+4, 0, 3);
             for(int j=0 ; j<DEG_9 ; j++)
-            {            
+            {
                 TYPE vNoeud = VECTOR_LOAD( *p_indice_nod1 );
                 TYPE vMessg = VECTOR_LOAD(p_msg1r);
                 if( (j & 0x01) == 0 ) __builtin_prefetch (p_msg1r+DEG_9, 0, 0);
@@ -1096,7 +1097,7 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
             __builtin_prefetch (p_indice_nod1 + DEG_10,   0, 3);
             __builtin_prefetch (p_indice_nod1 + DEG_10+4, 0, 3);
             for(int j=0 ; j<DEG_10 ; j++)
-            {            
+            {
                 TYPE vNoeud = VECTOR_LOAD( *p_indice_nod1 );
                 TYPE vMessg = VECTOR_LOAD(p_msg1r);
                 if( (j & 0x01) == 0 ) __builtin_prefetch (p_msg1r+DEG_10, 0, 0);
@@ -1148,7 +1149,7 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
             __builtin_prefetch (p_indice_nod1 + DEG_11,   0, 3);
             __builtin_prefetch (p_indice_nod1 + DEG_11+4, 0, 3);
             for(int j=0 ; j<DEG_11 ; j++)
-            {            
+            {
                 TYPE vNoeud = VECTOR_LOAD( *p_indice_nod1 );
                 TYPE vMessg = VECTOR_LOAD(p_msg1r);
                 if( (j & 0x01) == 0 ) __builtin_prefetch (p_msg1r+DEG_11, 0, 0);
@@ -1215,5 +1216,3 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
 
     return 0;
 }
-
-

@@ -18,7 +18,7 @@
 #define TYPE int8x16_t
 
 #define VECTOR_LOAD(ptr)            /*vld1q_s8((int8_t*)ptr)  */ ((ptr)[0])
-#define VECTOR_STORE(ptr,v)         /*vst1q_s8((int8_t*)ptr,v)*/ ((ptr)[0])=v 
+#define VECTOR_STORE(ptr,v)         /*vst1q_s8((int8_t*)ptr,v)*/ ((ptr)[0])=v
 
 #define VECTOR_ADD(a,b)             (vqaddq_s8(a,b)) //
 #define VECTOR_SUB(a,b)             (vqsubq_s8(a,b)) //
@@ -81,7 +81,7 @@ inline TYPE VECTOR_invSIGN2( TYPE a, TYPE z){
 #define VECTOR_SATURATE(a, max, min) \
     (VECTOR_MAX(VECTOR_MIN(a, max), min))
 
-//#define VECTOR_invSIGN2(val,sig) 
+//#define VECTOR_invSIGN2(val,sig)
 //    (VECTOR_SIGN(val, sig))
 //inline TYPE VECTOR_GET_SIGN_BIT(TYPE a, TYPE m){
 //    TYPE b = VECTOR_AND(a, m);
@@ -146,7 +146,7 @@ bool CDecoder_OMS_fixed_SSE::decode_8bits(signed char Intrinsic_fix[], signed ch
     ////////////////////////////////////////////////////////////////////////////
 
 
-    ////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////
     //
     // ENTRELACEMENT DES DONNEES D'ENTREE POUR POUVOIR EXPLOITER LE MODE SIMD
     //
@@ -163,7 +163,7 @@ bool CDecoder_OMS_fixed_SSE::decode_8bits(signed char Intrinsic_fix[], signed ch
     //
     ////////////////////////////////////////////////////////////////////////////
 
-    
+
     while (nombre_iterations--) {
         TYPE *p_msg1r                      = var_mesgs;
         TYPE *p_msg1w                      = var_mesgs;
@@ -174,7 +174,7 @@ bool CDecoder_OMS_fixed_SSE::decode_8bits(signed char Intrinsic_fix[], signed ch
         const TYPE max_msg = VECTOR_SET1( vSAT_POS_MSG );
 
         for (int i=0; i<DEG_1_COMPUTATIONS; i++){
-            
+
             TYPE tab_vContr[DEG_1];
             TYPE sign = VECTOR_ZERO;
             TYPE min1 = VECTOR_SET1(vSAT_POS_VAR);
@@ -252,7 +252,7 @@ bool CDecoder_OMS_fixed_SSE::decode_8bits(signed char Intrinsic_fix[], signed ch
                     VECTOR_STORE( &var_nodes[(*p_indice_nod2)], v2Sr);
                     p_msg1w        += 1;
                     p_indice_nod2  += 1;
-            }          
+            }
         }
 #endif
 
@@ -286,4 +286,3 @@ bool CDecoder_OMS_fixed_SSE::decode_8bits(signed char Intrinsic_fix[], signed ch
 
     return 0;//(arret == 0);
 }
-
