@@ -1,3 +1,22 @@
+/**
+  Copyright (c) 2012-2015 "Bordeaux INP, Bertrand LE GAL"
+  [bertrand.legal@ims-bordeaux.fr     ]
+  [http://legal.vvv.enseirb-matmeca.fr]
+
+  This file is part of Fast_LDPC_C_decoder_for_ARM15.
+
+  Fast_LDPC_C_decoder_for_ARM15 is free software: you can redistribute it and/or modify
+
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #include <math.h>
 #include <stdio.h>
@@ -18,7 +37,7 @@
 #define DATA_dTYPE uint8x16x2_t
 #define DATA_qTYPE uint16x8x2_t
 #define DATA_oTYPE uint32x4x2_t
-//  vzip_u8(uint8x8_t a, uint8x8_t b);       // VZIP.8 d0,d0 
+//  vzip_u8(uint8x8_t a, uint8x8_t b);       // VZIP.8 d0,d0
 /*
 #define SSE_16S_ADD(a,b)             (vqaddq_s8(a,b)) //
 #define SSE_16S_SUB(a,b)             (vqsubq_s8(a,b)) //
@@ -254,8 +273,8 @@ void uchar_transpose_neon(DATA_TYPE *src, DATA_TYPE *dst, int n)
         STORE_SIMD_FX(p_output++, COMBINE_HIGH(a_14_15_b_14_15_c_14_15_d_14_15_e_14_15_f_14_15_g_14_15_h_14_15, i_14_15_j_14_15_k_14_15_l_14_15_m_14_15_n_14_15_o_14_15_p_14_15));
 
         p_input  += 1;
-//        IACA_END 
-    }    
+//        IACA_END
+    }
 }
 
 
@@ -430,7 +449,7 @@ void uchar_itranspose_neon(DATA_TYPE *src, DATA_TYPE *dst, int n)
 
         STORE_SIMD_FX(copy_p_output1, COMBINE_LOW(a_0_1_b_0_1_c_0_1_d_0_1_e_0_1_f_0_1_g_0_1_h_0_1, i_0_1_j_0_1_k_0_1_l_0_1_m_0_1_n_0_1_o_0_1_p_0_1));
         STORE_SIMD_FX(copy_p_output2, COMBINE_HIGH(a_0_1_b_0_1_c_0_1_d_0_1_e_0_1_f_0_1_g_0_1_h_0_1, i_0_1_j_0_1_k_0_1_l_0_1_m_0_1_n_0_1_o_0_1_p_0_1));
-        
+
         STORE_SIMD_FX(copy_p_output3, COMBINE_LOW(a_2_3_b_2_3_c_2_3_d_2_3_e_2_3_f_2_3_g_2_3_h_2_3, i_2_3_j_2_3_k_2_3_l_2_3_m_2_3_n_2_3_o_2_3_p_2_3));
         STORE_SIMD_FX(copy_p_output4, COMBINE_HIGH(a_2_3_b_2_3_c_2_3_d_2_3_e_2_3_f_2_3_g_2_3_h_2_3, i_2_3_j_2_3_k_2_3_l_2_3_m_2_3_n_2_3_o_2_3_p_2_3));
 
@@ -452,7 +471,7 @@ void uchar_itranspose_neon(DATA_TYPE *src, DATA_TYPE *dst, int n)
         STORE_SIMD_FX(copy_p_output15, COMBINE_LOW(a_14_15_b_14_15_c_14_15_d_14_15_e_14_15_f_14_15_g_14_15_h_14_15, i_14_15_j_14_15_k_14_15_l_14_15_m_14_15_n_14_15_o_14_15_p_14_15));
         STORE_SIMD_FX(copy_p_output16, COMBINE_HIGH(a_14_15_b_14_15_c_14_15_d_14_15_e_14_15_f_14_15_g_14_15_h_14_15, i_14_15_j_14_15_k_14_15_l_14_15_m_14_15_n_14_15_o_14_15_p_14_15));
         p_output += 1;
-    }    
+    }
 }
 
 void uchar_transpose_neon(unsigned char *src, unsigned char *dst, int n)
@@ -558,7 +577,7 @@ void uchar_itranspose_neon(DATA_TYPE *src, DATA_TYPE *dst, int n)
         DATA_TYPE* copy_p_output16 = copy_p_output15 + N;
         STORE_SIMD_FX(copy_p_output1, _mm_unpacklo_epi64(a_0_1_b_0_1_c_0_1_d_0_1_e_0_1_f_0_1_g_0_1_h_0_1, i_0_1_j_0_1_k_0_1_l_0_1_m_0_1_n_0_1_o_0_1_p_0_1));
         STORE_SIMD_FX(copy_p_output2, _mm_unpackhi_epi64(a_0_1_b_0_1_c_0_1_d_0_1_e_0_1_f_0_1_g_0_1_h_0_1, i_0_1_j_0_1_k_0_1_l_0_1_m_0_1_n_0_1_o_0_1_p_0_1));
-        
+
         DATA_TYPE a_2_3_b_2_3_c_2_3_d_2_3_e_2_3_f_2_3_g_2_3_h_2_3                 = _mm_unpackhi_epi32(a_0_3_b_0_3_c_0_3_d_0_3, e_0_3_f_0_3_g_0_3_h_0_3);
         DATA_TYPE i_2_3_j_2_3_k_2_3_l_2_3_m_2_3_n_2_3_o_2_3_p_2_3                 = _mm_unpackhi_epi32(i_0_3_j_0_3_k_0_3_l_0_3, m_0_3_n_0_3_o_0_3_p_0_3);
 
@@ -602,6 +621,6 @@ void uchar_itranspose_neon(DATA_TYPE *src, DATA_TYPE *dst, int n)
         STORE_SIMD_FX(copy_p_output16, _mm_unpackhi_epi64(a_14_15_b_14_15_c_14_15_d_14_15_e_14_15_f_14_15_g_14_15_h_14_15, i_14_15_j_14_15_k_14_15_l_14_15_m_14_15_n_14_15_o_14_15_p_14_15));
         p_output += 1;
         p_input  += 16;
-    }    
+    }
 }
-*/    
+*/

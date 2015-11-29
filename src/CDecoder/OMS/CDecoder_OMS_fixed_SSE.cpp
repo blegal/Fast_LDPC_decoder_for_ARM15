@@ -1,19 +1,24 @@
-/*
- *  ldcp_decoder.h
- *  ldpc3
- *
- *  Created by legal on 02/04/11.
- *  Copyright 2011 ENSEIRB. All rights reserved.
- *
- */
+/**
+  Copyright (c) 2012-2015 "Bordeaux INP, Bertrand LE GAL"
+  [bertrand.legal@ims-bordeaux.fr     ]
+  [http://legal.vvv.enseirb-matmeca.fr]
 
-/*----------------------------------------------------------------------------*/
-/*
-    - 10 mars 2014 : bugfix de la saturation dans le message entrant (VN => CN)
- */
+  This file is part of Fast_LDPC_C_decoder_for_ARM15.
+
+  Fast_LDPC_C_decoder_for_ARM15 is free software: you can redistribute it and/or modify
+
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #include "CDecoder_OMS_fixed_SSE.h"
-//#include "../../CTools/CTools.h"
 
 #define TYPE int8x16_t
 

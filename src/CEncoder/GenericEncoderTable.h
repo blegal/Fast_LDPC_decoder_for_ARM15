@@ -1,3 +1,23 @@
+/**
+  Copyright (c) 2012-2015 "Bordeaux INP, Bertrand LE GAL"
+  [bertrand.legal@ims-bordeaux.fr     ]
+  [http://legal.vvv.enseirb-matmeca.fr]
+
+  This file is part of Fast_LDPC_C_decoder_for_ARM15.
+
+  Fast_LDPC_C_decoder_for_ARM15 is free software: you can redistribute it and/or modify
+
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 int EncValues[] = {
 	13, 0, 2084, 1613, 1548, 1286, 1460, 3196, 4297, 2481, 3369, 3451, 4620, 2622,
 	13, 1, 122, 1516, 3448, 2880, 1407, 1847, 3799, 3529, 373, 971, 4358, 3108,

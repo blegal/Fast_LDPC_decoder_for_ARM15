@@ -1,6 +1,6 @@
-#include <stdio.h>  
-#include <math.h>                        
-#include <stdlib.h>     
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
 #include <time.h>
 #include <string.h>
 #include <limits.h>
@@ -73,13 +73,13 @@ struct param_decoder {
 
     float cms_offset_float;
     int   cms_offset_fixed;
-    
+
     float tms_offset_float;
     int   tms_offset_fixed;
-    
+
     int scms_offset_fixed;
     int scms_offset_float;
-    
+
     float coms_offset_float;
     int   coms_offset_fixed;
     int   coms_format;
@@ -106,13 +106,12 @@ struct param_simulation {
 
     bool   fer_limit;
     double fer_limit_value;
-    
+
     bool   llr_optimization;
     bool   real_encoder;
     int    STOP_TIMER_SECOND;
     int    nb_frames;
     bool   worst_case_fer;
-    bool   show_llr_histo;
 };
 
 #include "./CDecoder/DecoderLibrary.h"
@@ -169,7 +168,6 @@ int main(int argc, char* argv[]) {
     p_simulation.qpsk_channel     = false;
     p_simulation.Es_N0            = false;
     p_simulation.worst_case_fer   = false;
-    p_simulation.show_llr_histo   = false;
 
     param_decoder p_decoder;
     p_decoder.early_term = false;
@@ -177,10 +175,10 @@ int main(int argc, char* argv[]) {
 
     p_decoder.nms_factor_fixed = 24;
     p_decoder.nms_factor_float = 0.75;
-    
+
     p_decoder.oms_offset_fixed = 1;
     p_decoder.oms_offset_float = 0.15;
-    
+
     int    NOMBRE_ITERATIONS = 30;
     int    STOP_TIMER_SECOND = -1;
 
@@ -220,9 +218,6 @@ int main(int argc, char* argv[]) {
 
         } else if (strcmp(argv[p], "-wc_fer") == 0) {
             p_simulation.worst_case_fer = true;
-
-        } else if (strcmp(argv[p], "-histo") == 0) {
-            p_simulation.show_llr_histo = true;
 
         } else if (strcmp(argv[p], "-timer") == 0) {
             STOP_TIMER_SECOND = atoi(argv[p + 1]);
@@ -371,7 +366,7 @@ int main(int argc, char* argv[]) {
     for(int i=0; i<4; i++){
         encoder[i] = EncoderLibrary(p_simulation.real_encoder, simu_data[i]);
     }
-    
+
     CChanel* noise[MAX_THREADS];
     for(int i=0; i<4; i++){
         noise[i] = CreateChannel(simu_data[i], p_simulation.qpsk_channel, p_simulation.Es_N0);
@@ -399,19 +394,17 @@ int main(int argc, char* argv[]) {
             decoder[i]->setSigmaChannel(noise[i]->get_SigB());
         }
 
-        
+
 //        if (p_simulation.llr_optimization == 0) {
             for(int i=0; i<4; i++){
                 conv_fp[i] = new CFastFixConversion(simu_data[i], FACTEUR_BETA, vSAT_NEG_LLR, vSAT_POS_LLR);
-                conv_fp[i]->ShowHistoOnDestroy( p_simulation.show_llr_histo );
             }
 //        } else {
 //            for(int i=0; i<4; i++){
 //                conv_fp[i] = new COptimFixConversion(simu_data[i], noise[i]->get_R(), vSAT_NEG_LLR, vSAT_POS_LLR);
-//                conv_fp[i]->ShowHistoOnDestroy( p_simulation.show_llr_histo );
 //            }
 //        }
-        
+
         bool auto_fe_mode = false;
         CErrorAnalyzer  errCounters  (simu_data[0], p_simulation.fe_limit, auto_fe_mode, p_simulation.worst_case_fer);
         for(int i=0; i<4; i++){
@@ -453,7 +446,7 @@ int main(int argc, char* argv[]) {
             int loopf  = (8 * NUM_ACTIVE_THREADS) * (64800 / NOEUD);
             loopf      = loopf > maxLoopF ? maxLoopF: loopf;
             loopf      = 32;
-            
+
 
             int d1[maxLoopF], d2[maxLoopF], d3[maxLoopF], d4[maxLoopF];
             int f1[maxLoopF], f2[maxLoopF], f3[maxLoopF], f4[maxLoopF];
@@ -641,14 +634,14 @@ int main(int argc, char* argv[]) {
                 break;
             }
         }
-        
+
         if (p_simulation.fer_limit == true) {
             if (errCounters.fer_value() < p_simulation.fer_limit_value) {
                 printf("(II) THE SIMULATION HAS STOP DUE TO THE (USER) QUASI-ERROR FREE CONTRAINT (on FER).\n");
                 break;
             }
         }
-        
+
     }
 
     // ON FAIT LE MENAGE PARMIS TOUS LES OBJETS CREES DYNAMIQUEMENT...
@@ -663,4 +656,3 @@ int main(int argc, char* argv[]) {
 
     return 1;
 }
-

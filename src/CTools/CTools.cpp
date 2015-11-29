@@ -1,3 +1,23 @@
+/**
+  Copyright (c) 2012-2015 "Bordeaux INP, Bertrand LE GAL"
+  [bertrand.legal@ims-bordeaux.fr     ]
+  [http://legal.vvv.enseirb-matmeca.fr]
+
+  This file is part of Fast_LDPC_C_decoder_for_ARM15.
+
+  Fast_LDPC_C_decoder_for_ARM15 is free software: you can redistribute it and/or modify
+
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "CTools.h"
 
 inline void transpose4x4_SSE(float const *A, float *B, const int lda, const int ldb) {
@@ -33,7 +53,7 @@ inline void transpose_block_SSE4x4(float const *A, float *B, const int n, const 
 // TRANPOSITION DE MATRICE DE TAILLE Nx4
 //
 void sse_trans_float(float *A, float *B, int n)
-{   
+{
     int i = n/4;
     while( i-- ){
         __m128 row1 = _mm_load_ps(A        );
@@ -172,22 +192,22 @@ void test_float_transpose()
     for(int i = 0; i < 16*SIZE; ++i){
         tabZ[i] = i;
     }
-    
+
 #if DEBUG == 1
     printf("(II) Matrix transpose auto-test module (SSE:float) : Transpose\n");
 #endif
     show_uchar_matrix((unsigned char*)tabX, SIZE, 16);
-    
+
     sse_trans((unsigned char*)tabX, (unsigned char*)tabY, SIZE, 16);
-    
+
     show_uchar_matrix((unsigned char*)tabY, 16, SIZE);
 
     for(int i = 0; i < 4*SIZE; ++i){
         tabZ[i] = 0;
     }
-    
+
     sse_trans((unsigned char*)tabY, (unsigned char*)tabX, 16, SIZE);
-    
+
     show_uchar_matrix((unsigned char*)tabX, SIZE, 16);
 
 #if DEBUG == 1
@@ -340,13 +360,13 @@ void uchar_transpose_sse(__m128i *src, __m128i *dst, int n)
         STORE_SIMD_FX(p_output++, _mm_unpacklo_epi64(a_14_15_b_14_15_c_14_15_d_14_15_e_14_15_f_14_15_g_14_15_h_14_15, i_14_15_j_14_15_k_14_15_l_14_15_m_14_15_n_14_15_o_14_15_p_14_15));
         STORE_SIMD_FX(p_output++, _mm_unpackhi_epi64(a_14_15_b_14_15_c_14_15_d_14_15_e_14_15_f_14_15_g_14_15_h_14_15, i_14_15_j_14_15_k_14_15_l_14_15_m_14_15_n_14_15_o_14_15_p_14_15));
         p_input  += 1;
-//        IACA_END 
-    }    
+//        IACA_END
+    }
 }
 
 #define LOAD_AND_DECIDE(a)    _mm_and_si128(_mm_cmpgt_epi8(_mm_load_si128(a),zero),mask)
 //#define LOAD_AND_DECIDE(a)    _mm_load_si128(a)
- 
+
 void uchar_itranspose_sse(__m128i *src, __m128i *dst, int n)
 {
     const int N = n /16; // NOMBRE DE PAQUET (128 bits) PAR TRAME
@@ -356,7 +376,7 @@ void uchar_itranspose_sse(__m128i *src, __m128i *dst, int n)
 
     const __m128i mask = _mm_set1_epi8( 0x01 );
     const __m128i zero = _mm_set1_epi8( 0x00 );
-    
+
     while( loop-- ){
         // STAGE 2 DU BUTTERFLY
         __m128i a             = LOAD_AND_DECIDE(p_input);
@@ -442,7 +462,7 @@ void uchar_itranspose_sse(__m128i *src, __m128i *dst, int n)
         __m128i* copy_p_output16 = copy_p_output15 + N;
         STORE_SIMD_FX(copy_p_output1, _mm_unpacklo_epi64(a_0_1_b_0_1_c_0_1_d_0_1_e_0_1_f_0_1_g_0_1_h_0_1, i_0_1_j_0_1_k_0_1_l_0_1_m_0_1_n_0_1_o_0_1_p_0_1));
         STORE_SIMD_FX(copy_p_output2, _mm_unpackhi_epi64(a_0_1_b_0_1_c_0_1_d_0_1_e_0_1_f_0_1_g_0_1_h_0_1, i_0_1_j_0_1_k_0_1_l_0_1_m_0_1_n_0_1_o_0_1_p_0_1));
-        
+
         __m128i a_2_3_b_2_3_c_2_3_d_2_3_e_2_3_f_2_3_g_2_3_h_2_3                 = _mm_unpackhi_epi32(a_0_3_b_0_3_c_0_3_d_0_3, e_0_3_f_0_3_g_0_3_h_0_3);
         __m128i i_2_3_j_2_3_k_2_3_l_2_3_m_2_3_n_2_3_o_2_3_p_2_3                 = _mm_unpackhi_epi32(i_0_3_j_0_3_k_0_3_l_0_3, m_0_3_n_0_3_o_0_3_p_0_3);
 
@@ -486,7 +506,7 @@ void uchar_itranspose_sse(__m128i *src, __m128i *dst, int n)
         STORE_SIMD_FX(copy_p_output16, _mm_unpackhi_epi64(a_14_15_b_14_15_c_14_15_d_14_15_e_14_15_f_14_15_g_14_15_h_14_15, i_14_15_j_14_15_k_14_15_l_14_15_m_14_15_n_14_15_o_14_15_p_14_15));
         p_output += 1;
          p_input += 16;
-    }    
+    }
 }
 
 void test_transpose()
@@ -496,7 +516,7 @@ void test_transpose()
     char tabIn[nb_data];
     char tabTp[nb_data];
     char tabOu[nb_data];
-    
+
     for(int i=0; i<nb_data; i++){
         tabIn[i] = rand()%255 - 128;
         tabTp[i] = 0;
@@ -505,12 +525,12 @@ void test_transpose()
 
     uchar_transpose_sse ( (__m128i*) tabIn, (__m128i*) tabOu, frame_length);
     uchar_itranspose_sse( (__m128i*) tabOu, (__m128i*) tabTp, frame_length);
-    
+
     int sum = 0;
     for(int i=0; i<nb_data; i++){
         sum += (tabIn[i]>0)-tabTp[i];
     }
-    
+
     if( sum != 0 ){
         for(int i=0; i<nb_data; i++){
             printf("%2d ", tabIn[i]);

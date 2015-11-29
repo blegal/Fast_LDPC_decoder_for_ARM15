@@ -1,10 +1,12 @@
 /**
   Copyright (c) 2012-2015 "Bordeaux INP, Bertrand LE GAL"
+  [bertrand.legal@ims-bordeaux.fr     ]
   [http://legal.vvv.enseirb-matmeca.fr]
 
-  This file is part of LDPC_C_Simulator.
+  This file is part of Fast_LDPC_C_decoder_for_ARM15.
 
-  LDPC_C_Simulator is free software: you can redistribute it and/or modify
+  Fast_LDPC_C_decoder_for_ARM15 is free software: you can redistribute it and/or modify
+
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
