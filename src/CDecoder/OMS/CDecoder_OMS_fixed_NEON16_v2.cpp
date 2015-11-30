@@ -28,14 +28,10 @@
 
 #define VECTOR_LOAD(ptr)            vld1q_s8((int8_t*)ptr) //((ptr)[0])
 #define VECTOR_STORE(ptr,v)         vst1q_s8((int8_t*)ptr,v)//((ptr)[0])=v
-
 #define VECTOR_ADD(a,b)             (vqaddq_s8(a,b)) //
 #define VECTOR_SUB(a,b)             (vqsubq_s8(a,b)) //
 #define VECTOR_ABS(a)               (vabsq_s8(a))    //
 #define VECTOR_NEG(a)               (vnegq_s8(a))    //
-
-//#define VECTOR_NEG(a)               (vqnegq_s8 (a,8))
-
 #define VECTOR_MAX(a,b)             (vmaxq_s8(a,b))  //
 #define VECTOR_MIN_1(a,b)           (vminq_s8(a,b))  //
 #define VECTOR_XOR(a,b)             (veorq_s8(a,b))  //
@@ -46,20 +42,15 @@
 #define VECTOR_SHR_BY_1(a,b)        (vshrq_n_s8(a,b))
 #define VECTOR_SHL_BY_1(a,b)        (vshlq_n_s8(a,b))
 #define VECTOR_SHR_BY_8(a)          (vshrq_n_s8(a,8))
-
 #define VECTOR_CMP_EQ(a,b)          (vceqq_s8(a,b))
 #define VECTOR_CMP_LTEQ(a,b)        (vcleq_s8(a,b))
 #define VECTOR_CMP_GE(a,b)          (vcgeq_s8(a,b))
-
 #define VECTOR_NOT(a)               (vmvnq_s8(a))
 #define VECTOR_MIN(a,b)             (VECTOR_MIN_1(a,b))
-
 #define VECTOR_ADD(a,b)             (vqaddq_s8(a,b))
 #define VECTOR_SBU(a,b)             (vqsubq_u8(a,b))
 #define VECTOR_SUB(a,b)             (vqsubq_s8(a,b))
 #define VECTOR_ANDNOT(a,b)          (VECTOR_AND(a,VECTOR_NOT(b))) // OUPS
-//#define VECTOR_ANDNOT(a,b)          (vbicq_u8(a,b)) // OUPS
-
 #define VECTOR_SIGN(a,b)            (VECTOR_XOR(a,b))    // OUPS
 #define VECTOR_EQUAL(a,b)           (VECTOR_CMP_EQ(a,b))
 #define VECTOR_ZERO                 (VECTOR_SET1u(0))
@@ -138,19 +129,6 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
 {
     ////////////////////////////////////////////////////////////////////////////
     //
-    // Initilisation des espaces memoire
-    //
-    //for (int i=0; i<MESSAGE; i++){
-    //    var_mesgs[i] = zero;
-    //}
-    //
-    ////////////////////////////////////////////////////////////////////////////
-
-
-    ////////////////////////////////////////////////////////////////////////////
-    //
-    // ENTRELACEMENT DES DONNEES D'ENTREE POUR POUVOIR EXPLOITER LE MODE SIMD
-    //
     if( NOEUD%16 == 0  ){
         uchar_transpose_neon((trans_TYPE*)Intrinsic_fix, (trans_TYPE*)var_nodes, NOEUD);
     }else{
@@ -166,11 +144,10 @@ bool CDecoder_OMS_fixed_NEON16_v2::decode_8bits(signed char Intrinsic_fix[], sig
 
     if( 1 )
     {
-	nombre_iterations--;
+	      nombre_iterations--;
         TYPE *p_msg1w               = var_mesgs;
         int8x16_t** p_indice_nod1   = p_vn_addr;
         int8x16_t** p_indice_nod2   = p_vn_addr;
-        //const TYPE min_var = VECTOR_SET1( vSAT_NEG_VAR );
         const TYPE max_msg = VECTOR_SET1( vSAT_POS_MSG );
 
 #ifdef DEG_1

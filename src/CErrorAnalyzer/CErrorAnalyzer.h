@@ -42,8 +42,6 @@ protected:
     bool _auto_fe_mode;
     bool _worst_case;
 
-    int* faulty_bits;
-
 public:
     CErrorAnalyzer(CTrame *t);
     CErrorAnalyzer(CTrame *t, int max_fe);

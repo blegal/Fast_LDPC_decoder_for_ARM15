@@ -27,6 +27,7 @@ class CDecoder_OMS_fixed_NEON16_v2 : public CDecoder_fixed_SSE{
 private:
     int8x16_t** p_vn_addr;
     signed char offset;
+
 public:
     CDecoder_OMS_fixed_NEON16_v2();
     ~CDecoder_OMS_fixed_NEON16_v2();
@@ -35,18 +36,6 @@ public:
 
 public:
     bool decode_8bits  (signed char var_nodes[], signed char Rprime_fix[], int nombre_iterations);
-//    bool decode_generic(signed char var_nodes[], signed char Rprime_fix[], int nombre_iterations);
 };
-
-//    p_vn_addr = new int8x16_t*[_M];
-//    for(int i=0; i<_M; i++){
-//       p_vn_addr[i] = &var_nodes[PosNoeudsVariable[i]];
-//    }
-
-
-//int8x16_t** p_indice_nod1   = p_vn_addr;
-//int8x16_t** p_indice_nod2   = p_vn_addr;
-
-//TYPE vNoeud   = VECTOR_LOAD( *p_indice_nod1 );
 
 #endif

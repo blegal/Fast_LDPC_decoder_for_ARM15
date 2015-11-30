@@ -21,11 +21,11 @@
 #include "CErrorAnalyzer.h"
 
 CErrorAnalyzer::CErrorAnalyzer(CTrame *t){
-    _data         = t->nb_data();
-    _vars         = t->nb_vars();
-    _frames       = t->nb_frames();
-    t_decode_data = t->get_t_decode_data();
-    t_in_bits     = t->get_t_in_bits();
+    _data              = t->nb_data();
+    _vars              = t->nb_vars();
+    _frames            = t->nb_frames();
+    t_decode_data      = t->get_t_decode_data();
+    t_in_bits          = t->get_t_in_bits();
     nb_bit_errors      = 0;
     nb_frame_errors    = 0;
     nb_analyzed_frames = 0;
@@ -33,11 +33,6 @@ CErrorAnalyzer::CErrorAnalyzer(CTrame *t){
     _auto_fe_mode      = true;
     buf_en_bits        = new int[_data * _frames];
     _worst_case        = false;
-
-    faulty_bits        = new int[_data];
-    for(int i=0; i<_data; i++){
-        faulty_bits[i] = 0;
-    }
 }
 
 CErrorAnalyzer::CErrorAnalyzer(CTrame *t, int max_fe){
@@ -53,11 +48,6 @@ CErrorAnalyzer::CErrorAnalyzer(CTrame *t, int max_fe){
     _auto_fe_mode      = false;
     buf_en_bits        = new int[_data * _frames];
     _worst_case        = false;
-
-    faulty_bits        = new int[_data];
-    for(int i=0; i<_data; i++){
-        faulty_bits[i] = 0;
-    }
 }
 
 CErrorAnalyzer::CErrorAnalyzer(CTrame *t, int max_fe, bool auto_fe_mode, bool worst_case_fer){
@@ -73,26 +63,10 @@ CErrorAnalyzer::CErrorAnalyzer(CTrame *t, int max_fe, bool auto_fe_mode, bool wo
     _auto_fe_mode      = auto_fe_mode;
     buf_en_bits        = new int[_data * _frames];
     _worst_case        = worst_case_fer;
-
-    faulty_bits        = new int[_data];
-    for(int i=0; i<_data; i++){
-        faulty_bits[i] = 0;
-    }
 }
 
-#define SHOW_FAULTY_BITS    false
 CErrorAnalyzer::~CErrorAnalyzer(){
     delete buf_en_bits;
-
-    if( SHOW_FAULTY_BITS ){
-        for(int i=0; i<_data; i++){
-            if( faulty_bits[i] != 0 ){
-                printf("Faulty bit : VN(%6d) = %4d\n", i, faulty_bits[i]);
-            }
-        }
-    }
-    delete faulty_bits;
-}
 
 
 long int CErrorAnalyzer::fe_limit()
@@ -135,18 +109,6 @@ void CErrorAnalyzer::generate(){
         }else{
             for (int i = 0; i < _data; i++) {
                 nErrors += (t_decode_data[offset1 + i] != 0);
-            }
-        }
-
-        //
-        // ON FAIT UN HISTOGRAMME DES FAULTY BITS
-        //
-        if ( nErrors > 0 ) {
-            for (int i = 0; i < _data; i++) {
-                if (t_decode_data[offset1 + i] != 0) {
-//                    printf("%d/%d\n", i, _data);
-                    faulty_bits[i] += 1;
-                }
             }
         }
 
