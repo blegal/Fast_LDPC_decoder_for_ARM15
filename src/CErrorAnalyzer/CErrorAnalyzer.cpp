@@ -67,7 +67,7 @@ CErrorAnalyzer::CErrorAnalyzer(CTrame *t, int max_fe, bool auto_fe_mode, bool wo
 
 CErrorAnalyzer::~CErrorAnalyzer(){
     delete buf_en_bits;
-
+}
 
 long int CErrorAnalyzer::fe_limit()
 {
